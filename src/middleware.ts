@@ -8,7 +8,6 @@ export const config = {
 }
 
 export function middleware(req: NextRequest) {
-  console.log('------------------')
   const basicAuth = req.headers.get('Authorization')
 
   if (basicAuth) {
