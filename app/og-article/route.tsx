@@ -12,7 +12,7 @@ export async function GET(req: Request) {
     const { searchParams } = new URL(req.url)
 
     const id = searchParams.get('id')
-    const token = searchParams.get('token')
+    const token = searchParams.get('i')
     const validToken = await getValidToken({ id })
     if (token !== validToken) {
       return new Response('Invalid', { status: 401 })
@@ -44,13 +44,14 @@ export async function GET(req: Request) {
               justifyItems: 'center'
             }}
           >
-            <img
-              alt="Vercel"
-              height={200}
-              src="data:image/svg+xml,%3Csvg width='116' height='100' fill='white' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M57.5 0L115 100H0L57.5 0z' /%3E%3C/svg%3E"
-              style={{ margin: '0 30px' }}
-              width={232}
-            />
+            {article.fields.thumbnail?.fields.file?.url && (
+              <img
+                alt="Vercel"
+                height={200}
+                src={`https://${article.fields.thumbnail.fields.file.url.toString()}`}
+                style={{ margin: '0 30px' }}
+              />
+            )}
           </div>
           <div
             style={{
@@ -65,7 +66,6 @@ export async function GET(req: Request) {
               whiteSpace: 'pre-wrap'
             }}
           >
-            ID: {id}
             {article.fields.title}
           </div>
         </div>

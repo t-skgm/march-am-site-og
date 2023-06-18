@@ -15,11 +15,16 @@ export default async function Page({ searchParams }: PageProps<{}, { id: string 
     <div>
       <h1>Encrypted Open Graph Image.</h1>
       <p>params: {JSON.stringify(searchParams)}</p>
-      <a href={`/og?id=${id}&token=${token}`} target="_blank" rel="noreferrer">
-        <code>
-          /og?id={id}&token={token}
-        </code>
-      </a>
+      <h2>Article</h2>
+      <ul>
+        <li>
+          <a href={`/og-article?id=${id}&i=${token}`} target="_blank" rel="noreferrer">
+            <code>
+              /og?id={id}&i={token}
+            </code>
+          </a>
+        </li>
+      </ul>
     </div>
   )
 }
