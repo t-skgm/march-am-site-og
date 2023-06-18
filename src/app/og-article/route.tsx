@@ -1,11 +1,9 @@
 import { ImageResponse } from '@vercel/og'
-import { PageConfig } from 'next'
+import { ServerRuntime } from 'next'
 import { getValidToken } from '../../utils/encrypt'
 import { getArticle } from '../../libs/contentful/getEntry'
 
-export const config: PageConfig = {
-  runtime: 'edge'
-}
+export const runtime = 'edge' satisfies ServerRuntime
 
 export async function GET(req: Request) {
   try {
