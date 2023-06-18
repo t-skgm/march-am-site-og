@@ -1,7 +1,7 @@
 import { ImageResponse } from '@vercel/og'
 
 export const config = {
-  runtime: 'edge',
+  runtime: 'edge'
 }
 
 export default async function handler() {
@@ -16,7 +16,7 @@ export default async function handler() {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundColor: 'white',
+          backgroundColor: 'white'
         }}
       >
         <div tw="bg-gray-50 flex">
@@ -49,7 +49,7 @@ export default async function handler() {
     ),
     {
       width: 1200,
-      height: 630,
+      height: 630
     }
   )
 }

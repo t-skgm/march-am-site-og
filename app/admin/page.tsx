@@ -1,17 +1,15 @@
-import { PageProps } from "../../types";
-import { getToken } from "../../utils/encrypt";
+import { PageProps } from '../../types'
+import { getToken } from '../../utils/encrypt'
 
 async function getKeyToken(params: Record<string, unknown>) {
-  return getToken(params);
+  return getToken(params)
 }
 
-export const dynamicParams = true;
+export const dynamicParams = true
 
-export default async function Page({
-  searchParams,
-}: PageProps<{}, { id: string }>) {
-  const token = await getKeyToken(searchParams);
-  const id = searchParams.id;
+export default async function Page({ searchParams }: PageProps<{}, { id: string }>) {
+  const token = await getKeyToken(searchParams)
+  const id = searchParams.id
 
   return (
     <div>
@@ -23,5 +21,5 @@ export default async function Page({
         </code>
       </a>
     </div>
-  );
+  )
 }

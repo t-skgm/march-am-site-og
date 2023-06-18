@@ -1,7 +1,7 @@
 import { ImageResponse } from '@vercel/og'
 
 export const config = {
-  runtime: 'edge',
+  runtime: 'edge'
 }
 
 export default async function handler() {
@@ -20,7 +20,7 @@ export default async function handler() {
           alignItems: 'center',
           justifyContent: 'center',
           flexDirection: 'column',
-          display: 'flex',
+          display: 'flex'
         }}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -35,7 +35,7 @@ export default async function handler() {
           style={{
             fontSize: 60,
             marginTop: 30,
-            lineHeight: 1.8,
+            lineHeight: 1.8
           }}
         >
           Vercel Edge Network
@@ -44,7 +44,7 @@ export default async function handler() {
     ),
     {
       width: 1200,
-      height: 600,
+      height: 600
     }
   )
 }

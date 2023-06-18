@@ -1,11 +1,11 @@
 import { ImageResponse } from '@vercel/og'
 
 export const config = {
-  runtime: 'edge',
+  runtime: 'edge'
 }
 
-const font = fetch(new URL('../../assets/TYPEWR__.TTF', import.meta.url)).then(
-  (res) => res.arrayBuffer()
+const font = fetch(new URL('../../assets/TYPEWR__.TTF', import.meta.url)).then((res) =>
+  res.arrayBuffer()
 )
 
 export default async function handler() {
@@ -21,7 +21,7 @@ export default async function handler() {
           fontSize: 100,
           fontFamily: 'Typewriter',
           paddingTop: '100px',
-          paddingLeft: '50px',
+          paddingLeft: '50px'
         }}
       >
         Hello world!
@@ -34,9 +34,9 @@ export default async function handler() {
         {
           name: 'Typewriter',
           data: fontData,
-          style: 'normal',
-        },
-      ],
+          style: 'normal'
+        }
+      ]
     }
   )
 }
