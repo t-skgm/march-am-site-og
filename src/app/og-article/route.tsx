@@ -1,4 +1,4 @@
-import { ImageResponse } from '@vercel/og'
+import { ImageResponse } from 'next/server'
 import { ServerRuntime } from 'next'
 import { getValidToken } from '../../utils/encrypt'
 import { getArticle } from '../../libs/contentful/getEntry'
