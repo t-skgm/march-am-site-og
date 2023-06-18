@@ -1,6 +1,7 @@
 import { ImageResponse } from '@vercel/og'
 import { PageConfig } from 'next'
 import { getValidToken } from '../../utils/encrypt'
+import { getArticle } from '../../libs/contentful/getEntry'
 
 export const config: PageConfig = {
   runtime: 'edge'
@@ -16,6 +17,8 @@ export async function GET(req: Request) {
     if (token !== validToken) {
       return new Response('Invalid', { status: 401 })
     }
+
+    const article = await getArticle({ articleId: id! })
 
     return new ImageResponse(
       (
@@ -63,6 +66,7 @@ export async function GET(req: Request) {
             }}
           >
             ID: {id}
+            {article.fields.title}
           </div>
         </div>
       ),
