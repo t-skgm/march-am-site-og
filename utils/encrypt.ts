@@ -18,7 +18,7 @@ export const getToken = (value: Record<string, unknown>) => {
   return token;
 };
 
-export const verifyToken = async (value: Record<string, unknown>) =>
+export const getValidToken = async (value: Record<string, unknown>) =>
   toHex(
     await crypto.subtle.sign(
       "HMAC",

@@ -1,18 +1,21 @@
 import { ImageResponse } from "@vercel/og";
-// App router includes @vercel/og.
-// No need to install it.
+import { PageConfig } from "next";
+import { getValidToken } from "../../utils/encrypt";
 
-export const runtime = "edge";
+export const config: PageConfig = {
+  runtime: "edge",
+};
 
 export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url);
 
-    // ?title=<title>
-    const hasTitle = searchParams.has("title");
-    const title = hasTitle
-      ? searchParams.get("title")?.slice(0, 100)
-      : "My default title";
+    const id = searchParams.get("id");
+    const token = searchParams.get("token");
+    const validToken = await getValidToken({ id });
+    if (token !== validToken) {
+      return new Response("Invalid", { status: 401 });
+    }
 
     return new ImageResponse(
       (
@@ -48,6 +51,7 @@ export async function GET(req: Request) {
           </div>
           <div
             style={{
+              display: "flex",
               fontSize: 60,
               fontStyle: "normal",
               letterSpacing: "-0.025em",
@@ -58,7 +62,7 @@ export async function GET(req: Request) {
               whiteSpace: "pre-wrap",
             }}
           >
-            {title}
+            ID: {id}
           </div>
         </div>
       ),
