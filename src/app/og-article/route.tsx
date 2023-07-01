@@ -19,13 +19,12 @@ export async function GET(req: Request) {
     }
 
     const fontNotoData = await fontNoto
-    const imageOgpBgDataUrl = await imageOgpBg
 
     return new ImageResponse(
       (
         <div
           style={{
-            backgroundImage: `url(${imageOgpBgDataUrl})`,
+            backgroundImage: `url(${constants.images.OGP_BG_URL})`,
             backgroundRepeat: 'no-repeat',
             height: '100%',
             width: '100%',
@@ -83,9 +82,10 @@ export async function GET(req: Request) {
   }
 }
 
-const fontNoto = fetch(new URL('../../assets/fonts/NotoSansJP-SemiBold.ttf', import.meta.url)).then(
-  (res) => res.arrayBuffer()
-)
-const imageOgpBg = fetch(new URL('../../assets/images/OGP_bg.jpg', import.meta.url))
-  .then((res) => res.arrayBuffer())
-  .then((ab) => arrayBufferToDataURL(ab))
+const fontNoto = fetch(
+  new URL('../../assets/fonts/NotoSansJP-SemiBold.woff', import.meta.url)
+).then((res) => res.arrayBuffer())
+
+// const imageOgpBg = fetch(new URL('../../assets/images/OGP_bg.jpg', import.meta.url))
+//   .then((res) => res.arrayBuffer())
+//   .then((ab) => arrayBufferToDataURL(ab))
