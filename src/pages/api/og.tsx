@@ -1,12 +1,11 @@
-import { ImageResponse } from 'next/server'
+import { ImageResponse, NextRequest } from 'next/server'
 import { ServerRuntime } from 'next'
 import { getValidToken } from '../../utils/encrypt'
 import { constants } from '../../constants'
-import { fetchGoogleFont } from '../../utils/fetchGoogleFont'
 
 export const runtime: ServerRuntime = 'edge'
 
-export async function GET(req: Request) {
+export default async function handler(req: NextRequest) {
   try {
     const { searchParams } = new URL(req.url)
 
@@ -17,8 +16,6 @@ export async function GET(req: Request) {
     if (token !== validToken) {
       return new Response('Invalid', { status: 401 })
     }
-
-    const fontNotoData = await fetchGoogleFont('Noto+Sans+JP:wght@600', title ?? '')
 
     return new ImageResponse(
       (
@@ -66,14 +63,14 @@ export async function GET(req: Request) {
       ),
       {
         width: 1200,
-        height: 630,
-        fonts: [
-          {
-            name: 'NotoSansJP',
-            data: fontNotoData,
-            style: 'normal'
-          }
-        ]
+        height: 630
+        // fonts: [
+        //   {
+        //     name: 'NotoSansJP',
+        //     data: await getFontNoto(),
+        //     style: 'normal'
+        //   }
+        // ]
       }
     )
   } catch (e: any) {
@@ -81,6 +78,11 @@ export async function GET(req: Request) {
     return new Response(`Failed to generate the image`, { status: 500 })
   }
 }
+
+const getFontNoto = () =>
+  fetch(new URL('../../assets/fonts/NotoSansJP-SemiBold.woff', import.meta.url)).then((res) =>
+    res.arrayBuffer()
+  )
 
 // const imageOgpBg = fetch(new URL('../../assets/images/OGP_bg.jpg', import.meta.url))
 //   .then((res) => res.arrayBuffer())
