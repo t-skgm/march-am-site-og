@@ -1,6 +1,5 @@
 {
   "name": "march-am-site-og",
-  "repository": "https://github.com/vercel/examples.git",
   "license": "MIT",
   "private": true,
   "scripts": {
@@ -9,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "fmt": "prettier --write .",
+    "typecheck": "tsc -p . --noEmit",
     "codegen": "contentful-typescript-codegen --output libs/contentful/generated.d.ts"
   },
   "dependencies": {

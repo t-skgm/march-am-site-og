@@ -1,82 +1,91 @@
 import { ImageResponse } from 'next/server'
 import { ServerRuntime } from 'next'
 import { getValidToken } from '../../utils/encrypt'
-import { getArticle } from '../../libs/contentful/getEntry'
+import { constants } from '../../constants'
+import { arrayBufferToDataURL } from '../../utils/arrayBufferToDataURL'
 
-export const runtime = 'edge' satisfies ServerRuntime
+export const runtime: ServerRuntime = 'edge'
 
 export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url)
 
-    const id = searchParams.get('id')
+    const title = searchParams.get('title')
+
     const token = searchParams.get('i')
-    const validToken = await getValidToken({ id })
+    const validToken = await getValidToken({ title })
     if (token !== validToken) {
       return new Response('Invalid', { status: 401 })
     }
 
-    const article = await getArticle({ articleId: id! })
+    const fontNotoData = await fontNoto
+    const imageOgpBgDataUrl = await imageOgpBg
 
     return new ImageResponse(
       (
         <div
           style={{
-            backgroundColor: 'black',
-            backgroundSize: '150px 150px',
+            backgroundImage: `url(${imageOgpBgDataUrl})`,
+            backgroundRepeat: 'no-repeat',
             height: '100%',
             width: '100%',
             display: 'flex',
             textAlign: 'center',
-            alignItems: 'center',
-            justifyContent: 'center',
+            alignItems: 'stretch',
+            justifyContent: 'space-between',
             flexDirection: 'column',
-            flexWrap: 'nowrap'
+            flexWrap: 'nowrap',
+            padding: '108px 76px 76px'
           }}
         >
           <div
             style={{
               display: 'flex',
-              alignItems: 'center',
+              flex: 1,
               justifyContent: 'center',
-              justifyItems: 'center'
+              alignItems: 'center',
+              padding: '40px'
             }}
           >
-            {article.fields.thumbnail?.fields.file?.url && (
-              <img
-                alt="Vercel"
-                height={200}
-                src={`https://${article.fields.thumbnail.fields.file.url.toString()}`}
-                style={{ margin: '0 30px' }}
-              />
-            )}
-          </div>
-          <div
-            style={{
-              display: 'flex',
-              fontSize: 60,
-              fontStyle: 'normal',
-              letterSpacing: '-0.025em',
-              color: 'white',
-              marginTop: 30,
-              padding: '0 120px',
-              lineHeight: 1.4,
-              whiteSpace: 'pre-wrap'
-            }}
-          >
-            {article.fields.title}
+            <div
+              style={{
+                display: 'block',
+                fontSize: 60,
+                fontStyle: 'normal',
+                fontFamily: 'NotoSansJP',
+                letterSpacing: '-0.025em',
+                color: constants.colors.deepGreen,
+                lineHeight: 1.4,
+                // ３行以上で省略
+                lineClamp: 3
+              }}
+            >
+              {title}
+            </div>
           </div>
         </div>
       ),
       {
         width: 1200,
-        height: 630
+        height: 630,
+        fonts: [
+          {
+            name: 'NotoSansJP',
+            data: fontNotoData,
+            style: 'normal'
+          }
+        ]
       }
     )
   } catch (e: any) {
-    console.log(`${e.message}`)
-    return new Response(`Failed to generate the image`, {
-      status: 500
-    })
+    console.log(e)
+    return new Response(`Failed to generate the image`, { status: 500 })
   }
 }
+
+const fontNoto = fetch(new URL('../../assets/fonts/NotoSansJP-SemiBold.ttf', import.meta.url)).then(
+  (res) => res.arrayBuffer()
+)
+const imageOgpBg = fetch(new URL('../../assets/images/OGP_bg.jpg', import.meta.url))
+  .then((res) => res.arrayBuffer())
+  .then((ab) => arrayBufferToDataURL(ab))
