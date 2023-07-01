@@ -12,11 +12,11 @@ export default async function Page({ searchParams }: PageProps<{}, { id: string 
   const id = searchParams.id
   const article = await getArticle({ articleId: id! })
 
-  const title = article.fields.title
+  const text = `${article.fields.title}`
 
-  const token = await getKeyToken({ title })
+  const token = await getKeyToken({ text })
 
-  const href = `/og-article?i=${token}&title=${encodeURIComponent(title)}`
+  const href = `/og?i=${token}&text=${encodeURIComponent(text)}`
 
   return (
     <div>

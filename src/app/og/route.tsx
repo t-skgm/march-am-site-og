@@ -10,15 +10,15 @@ export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url)
 
-    const title = searchParams.get('title')
+    const text = searchParams.get('text') ?? ''
 
     const token = searchParams.get('i')
-    const validToken = await getValidToken({ title })
+    const validToken = await getValidToken({ text })
     if (token !== validToken) {
       return new Response('Invalid', { status: 401 })
     }
 
-    const fontNotoData = await fetchGoogleFont('Noto+Sans+JP:wght@600', title ?? '')
+    const fontNotoData = await fetchGoogleFont('Noto+Sans+JP:wght@600', text)
 
     return new ImageResponse(
       (
@@ -59,7 +59,7 @@ export async function GET(req: Request) {
                 lineClamp: 3
               }}
             >
-              {title}
+              {text}
             </div>
           </div>
         </div>
