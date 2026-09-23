@@ -1,4 +1,4 @@
-const secret = process.env.ENCRYTPTION_SECRET!
+const secret = process.env.ENCRYPTION_SECRET!
 
 export const getKey = async () =>
   crypto.subtle.importKey(
