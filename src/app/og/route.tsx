@@ -4,7 +4,7 @@ import { getValidToken } from '../../utils/encrypt'
 import { constants } from '../../constants'
 import { fetchGoogleFont } from '../../utils/fetchGoogleFont'
 
-export const runtime: ServerRuntime = 'edge'
+export const runtime: ServerRuntime = 'nodejs'
 
 export async function GET(req: Request) {
   try {
