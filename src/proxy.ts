@@ -1,13 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 /**
- * @see https://nextjs.org/docs/app/building-your-application/routing/middleware#matcher
+ * @see https://nextjs.org/docs/app/building-your-application/routing/proxy#matcher
  */
 export const config = {
   matcher: ['/admin', '/admin/:path*']
 }
 
-export function middleware(req: NextRequest) {
+export function proxy(req: NextRequest) {
   const basicAuth = req.headers.get('Authorization')
 
   if (basicAuth) {

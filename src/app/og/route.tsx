@@ -1,10 +1,10 @@
-import { ImageResponse } from 'next/server'
+import { ImageResponse } from 'next/og'
 import { ServerRuntime } from 'next'
 import { getValidToken } from '../../utils/encrypt'
 import { constants } from '../../constants'
 import { fetchGoogleFont } from '../../utils/fetchGoogleFont'
 
-export const runtime: ServerRuntime = 'edge'
+export const runtime: ServerRuntime = 'nodejs'
 
 export async function GET(req: Request) {
   try {
@@ -21,49 +21,47 @@ export async function GET(req: Request) {
     const fontNotoData = await fetchGoogleFont('Noto+Sans+JP:wght@600', text)
 
     return new ImageResponse(
-      (
+      <div
+        style={{
+          backgroundImage: `url(${constants.images.OGP_BG_URL})`,
+          backgroundRepeat: 'no-repeat',
+          height: '100%',
+          width: '100%',
+          display: 'flex',
+          textAlign: 'center',
+          alignItems: 'stretch',
+          justifyContent: 'space-between',
+          flexDirection: 'column',
+          flexWrap: 'nowrap',
+          padding: '108px 76px 76px'
+        }}
+      >
         <div
           style={{
-            backgroundImage: `url(${constants.images.OGP_BG_URL})`,
-            backgroundRepeat: 'no-repeat',
-            height: '100%',
-            width: '100%',
             display: 'flex',
-            textAlign: 'center',
-            alignItems: 'stretch',
-            justifyContent: 'space-between',
-            flexDirection: 'column',
-            flexWrap: 'nowrap',
-            padding: '108px 76px 76px'
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+            padding: '40px'
           }}
         >
           <div
             style={{
-              display: 'flex',
-              flex: 1,
-              justifyContent: 'center',
-              alignItems: 'center',
-              padding: '40px'
+              display: 'block',
+              fontSize: 60,
+              fontStyle: 'normal',
+              fontFamily: 'NotoSansJP',
+              letterSpacing: '-0.025em',
+              color: constants.colors.deepGreen,
+              lineHeight: 1.4,
+              // ３行以上で省略
+              lineClamp: 3
             }}
           >
-            <div
-              style={{
-                display: 'block',
-                fontSize: 60,
-                fontStyle: 'normal',
-                fontFamily: 'NotoSansJP',
-                letterSpacing: '-0.025em',
-                color: constants.colors.deepGreen,
-                lineHeight: 1.4,
-                // ３行以上で省略
-                lineClamp: 3
-              }}
-            >
-              {text}
-            </div>
+            {text}
           </div>
         </div>
-      ),
+      </div>,
       {
         width: 1200,
         height: 630,
